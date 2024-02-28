@@ -1,15 +1,13 @@
-﻿// BucketZombie.cs
-
-using System;
+// ConeZombie.cs
 
 namespace PlantsZombiesGame
 {
-    public class BucketZombie : Zombie
+    public class ConeZombie : Zombie
     {
-        public BucketZombie()
+        public ConeZombie()
         {
-            Type = "BucketZombie";
-            Health = 150; // Set the initial health for BucketZombie
+            Type = "ConeZombie";
+            Health = 75; // Set the initial health for ConeZombie
         }
 
         public override void TakeDamage(int damage)
