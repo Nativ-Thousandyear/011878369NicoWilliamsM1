@@ -1,5 +1,4 @@
 ﻿// Program.cs (Main Program)
-
 using System;
 using System.Collections.Generic;
 using PlantsZombiesGame;
@@ -89,7 +88,7 @@ class Program
     {
         if (zombies.Count == 0)
         {
-            Console.WriteLine("First Create a zombies.");
+            Console.WriteLine("First create zombies.");
             return;
         }
 
@@ -102,12 +101,12 @@ class Program
 
         int round = 0;
 
-        do
+        while (zombies.Count > 0)
         {
             Console.WriteLine($"Round {round}:");
             DisplayZombies(zombies);
 
-            foreach (var zombie in zombies)
+            foreach (var zombie in zombies.ToList())
             {
                 zombie.TakeDamage(damageValue);
                 TransformZombie(zombies, zombie);
@@ -116,20 +115,30 @@ class Program
             zombies.RemoveAll(zombie => zombie.Health <= 0);
 
             round++;
-        } while (zombies.Count > 0);
 
-        Console.WriteLine("Game Over!");
+            if (zombies.Count == 0)
+            {
+                Console.WriteLine("All zombies defeated!");
+                Console.WriteLine("Game Over!");
+            }
+            else
+            {
+                Console.WriteLine("Press Enter to continue to the next round...");
+                Console.ReadLine();
+            }
+        }
+
+        zombies.Clear(); // Clear the zombies after the game ends
     }
 
     static void TransformZombie(List<Zombie> zombies, Zombie zombie)
     {
         if (zombie != null && zombie.Health <= 0)
         {
-            // Transform logic here for each zombie type
             if (zombie is RegularZombie)
             {
-                Console.WriteLine($"{zombie.Type} transformed to another type with dwindling health: {zombie.Health}");
-                zombies.Add(new ConeZombie());
+                Console.WriteLine($"{zombie.Type} has been defeated!");
+                Console.WriteLine("Game Over!");
             }
             else if (zombie is ConeZombie)
             {
@@ -154,7 +163,7 @@ class Program
         Console.Write("Round: ");
         foreach (var zombie in zombies)
         {
-            Console.Write($"[{zombie.Type}/{zombie.Health},] ");
+            Console.Write($"[{zombie.Type.Substring(0, 1)}/{zombie.Health},] ");
         }
         Console.WriteLine();
     }
